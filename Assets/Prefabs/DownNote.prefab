@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assignedTime: 0
+  assignedLength: 0
 --- !u!212 &6401272534080061596
 SpriteRenderer:
   m_ObjectHideFlags: 0

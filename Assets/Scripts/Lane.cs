@@ -65,7 +65,10 @@ public class Lane : MonoBehaviour
                 {
                     Hit();
                     print($"Hit on {inputIndex} note");
-                    Destroy(notes[inputIndex].gameObject);
+                    //Убрал деспавн для длинных нот после нажатия в тайминг
+                    if (notes[inputIndex].GetComponent<Note>().assignedLength == 1) {
+                        Destroy(notes[inputIndex].gameObject);
+                    }
                     inputIndex++;
                 }
                 else
