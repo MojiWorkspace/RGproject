@@ -91,9 +91,13 @@ namespace RhythmGame
                 }
             }
             
-            OnStartGame?.Invoke(); 
             
-            Invoke("StartGameAfterCountdown", 1f);
+            _gameState = GameState.Start;
+            
+            //Такая конструкция нужна для делея в 3 секунды
+            //OnStartGame?.Invoke(); 
+            //Invoke("StartGameAfterCountdown", 1f);
+            
             Debug.Log("StartGame");
         }
 

@@ -16,7 +16,7 @@ namespace RhythmGame
         public void OnUpdate(float deltaTime)
         {
             _character.Move(_inputManager.Move(), Time.deltaTime);
-            Debug.Log("tick");
+            //Debug.Log("tick");
         }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0556f1572d44156429f3a127dc7eed0e, type: 3}
   m_Name: InputConfig
   m_EditorClassIdentifier: 
-  left: 0
-  right: 0
-  forward: 0
-  back: 0
+  left: 276
+  right: 275
+  forward: 273
+  back: 274
