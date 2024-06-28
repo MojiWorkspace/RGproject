@@ -28,7 +28,6 @@ namespace RhythmGame
         private void Awake()
         {
             _gameState = GameState.Off;
-            
             IGameListener.onRegister += AddListener;
         }
         
@@ -93,8 +92,9 @@ namespace RhythmGame
             }
             
             OnStartGame?.Invoke(); 
-
-            Invoke("StartGameAfterCountdown", 3f);
+            
+            Invoke("StartGameAfterCountdown", 1f);
+            Debug.Log("StartGame");
         }
 
         private void StartGameAfterCountdown()
@@ -114,7 +114,7 @@ namespace RhythmGame
             }
             
             Time.timeScale = 0;
-            Debug.Log("vi proigrali");
+            Debug.Log("FinishGame");
             _gameState = GameState.Finish;
         }
         
@@ -129,6 +129,7 @@ namespace RhythmGame
                 }
             }
             Time.timeScale = 0;
+            Debug.Log("PauseGame");
             _gameState = GameState.Pause;
         }   
         
@@ -143,6 +144,7 @@ namespace RhythmGame
                 }
             }
             Time.timeScale = 1;
+            Debug.Log("ResumeGame");
             _gameState = GameState.Start;
         }
     }

@@ -12,11 +12,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Note.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Input/MoveConfig.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Input/MoveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Objects/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/Test.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/IGameListener.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/GameListeners.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Input/MoveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="2iQ5XVhhf7MxB0utolAOFjxRmOv" />
@@ -41,7 +43,7 @@
       <updated>1719410008252</updated>
       <workItem from="1719410015038" duration="1194000" />
       <workItem from="1719473541003" duration="4082000" />
-      <workItem from="1719559216324" duration="1048000" />
+      <workItem from="1719559216324" duration="5766000" />
     </task>
     <servers />
   </component>
