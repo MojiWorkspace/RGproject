@@ -24,6 +24,7 @@ public class ScoreManager : MonoBehaviour
         comboScore = 0;
         Instance.missSFX.Play();
     }
+
     private void Update()
     {
         scoreText.text = "Combo: " + comboScore.ToString();

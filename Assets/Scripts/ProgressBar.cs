@@ -8,20 +8,25 @@ public class ProgressBar : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private Image image;
+    public LaneBtn[] buttons;
 
     [Header("Properties")]
     public int value;
     public int maxValue;
-    public float assignedTime;
     private bool isCorrectlyConfigured = false;
-    private bool active = false;
+    public bool isActive = false;
+    public float isActiveAfterTime;
+    public float activeTime;
 
     //Валидация конфигурации (тест)
     private void Awake()
     {
-        if (image.type == Image.Type.Filled & image.fillMethod == Image.FillMethod.Vertical & maxValue > 0) {
+        if (image.type == Image.Type.Filled & image.fillMethod == Image.FillMethod.Vertical & maxValue > 0)
+        {
             isCorrectlyConfigured = true;
-        } else {
+        }
+        else
+        {
             Debug.Log("{GameLog} => {ProgressBar} - {<color=red>Error</color>} -> Components Parameters are configurred incorrectly \n" +
                      "Required type: Filled \n" +
                      "Required FillMethod: Vertical \n" +
@@ -31,31 +36,36 @@ public class ProgressBar : MonoBehaviour
 
     void Start()
     {
+        GetComponent<Transparency>().defaultTransparency = 0;
 
+        foreach (var item in buttons) item.isActive = false;
     }
 
     void Update()
     {
-        assignedTime -= Time.deltaTime;
-        if (assignedTime <= 0.0f)
-        {
-            active = true;
-        }
-    }
-
-    private void LateUpdate()
-    {
         if (!isCorrectlyConfigured) return;
-        if (active) {
-            transform.localPosition = new Vector3(0, 0, 0);
-            if (Input.GetKeyDown("x") || Input.GetKeyDown("c")) {
-                value++;
+
+        if (isActive)
+        {
+            //планируется добавить полноценную логику с обратным отсчетом
+            isActiveAfterTime -= Time.deltaTime;
+
+            GetComponent<Transparency>().changeSpeed = 0.5f;
+
+            if (isActiveAfterTime <= 0)
+            {
+                foreach (var item in buttons) item.isActive = true;
+
+                if (Input.GetKeyDown("x") || Input.GetKeyDown("c")) value++;
+
+                image.fillAmount = (float) value / maxValue;
+
+                activeTime -= Time.deltaTime;
+
+                // В дальнейшем планируется реализация: if fillAmount != 1 и activeTime <= 0 тогда конец игры
+                if (image.fillAmount == 1 || activeTime <= 0) Destroy(gameObject);
             }
-            image.fillAmount = (float) value / maxValue;
-
-            if (image.fillAmount == 1) Destroy(gameObject);
         }
-
     }
 
     public void SetValue(int value) => this.value = value;

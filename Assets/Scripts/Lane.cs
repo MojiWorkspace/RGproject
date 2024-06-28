@@ -9,6 +9,7 @@ public class Lane : MonoBehaviour
     public Melanchall.DryWetMidi.MusicTheory.NoteName noteRestriction;
     public KeyCode input;
     public GameObject notePrefab;
+    public GameObject progressBar;
     List<Note> notes = new List<Note>();
     public List<double> timeStamps = new List<double>(); // список таймингов нот в миди файле
     public List<double> notesLen = new List<double>(); // список длин нот из миди файла
@@ -48,6 +49,16 @@ public class Lane : MonoBehaviour
                 notes.Add(note.GetComponent<Note>());
                 note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];
                 note.GetComponent<Note>().assignedLength = (float)notesLen[spawnIndex];
+
+                if (progressBar)
+                {
+                    progressBar.GetComponent<ProgressBar>().isActive = true;
+                    // задержка для режима активности (время от точки спавна до точки нажатия ноты)
+                    progressBar.GetComponent<ProgressBar>().isActiveAfterTime = SongManager.Instance.noteTime;
+                    // время активности переводим обратно в секунды
+                    progressBar.GetComponent<ProgressBar>().activeTime = note.GetComponent<Note>().assignedLength * 107 / 1000;
+                }
+
                 spawnIndex++;
             }
         }
@@ -58,15 +69,15 @@ public class Lane : MonoBehaviour
             double marginOfError = SongManager.Instance.marginOfError;
             double audioTime = SongManager.GetAudioSourceTime() - (SongManager.Instance.inputDelayInMilliseconds / 1000.0);
 
-            //обрабаботка ввода
             if (Input.GetKeyDown(input))
             {
                 if (Math.Abs(audioTime - timeStamp) < marginOfError)
                 {
                     Hit();
                     print($"Hit on {inputIndex} note");
-                    //Убрал деспавн для длинных нот после нажатия в тайминг
-                    if (notes[inputIndex].GetComponent<Note>().assignedLength == 1) {
+
+                    if (notes[inputIndex].GetComponent<Note>().assignedLength == 1)
+                    {
                         Destroy(notes[inputIndex].gameObject);
                     }
                     inputIndex++;
@@ -76,6 +87,7 @@ public class Lane : MonoBehaviour
                     print($"Hit inaccurate on {inputIndex} note with {Math.Abs(audioTime - timeStamp)} delay");
                 }
             }
+
             if (timeStamp + marginOfError <= audioTime)
             {
                 Miss();
@@ -83,7 +95,6 @@ public class Lane : MonoBehaviour
                 inputIndex++;
             }
         }
-
     }
     private void Hit()
     {

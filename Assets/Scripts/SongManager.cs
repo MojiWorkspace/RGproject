@@ -16,8 +16,6 @@ public class SongManager : MonoBehaviour
     public double marginOfError; // in seconds
 
     public int inputDelayInMilliseconds;
-
-
     public string fileLocation;
     public float noteTime;
     public float noteSpawnY;
@@ -38,6 +36,7 @@ public class SongManager : MonoBehaviour
     {
         var notes = midiFile.GetNotes();
         var array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
+        
         notes.CopyTo(array, 0);
 
         foreach (var lane in lanes) lane.SetTimeStamps(array);
@@ -48,6 +47,12 @@ public class SongManager : MonoBehaviour
     {
         audioSource.Play();
     }
+
+    public void StopSong()
+    {
+        audioSource.Stop();
+    }
+
     public static double GetAudioSourceTime()
     {
         return (double)Instance.audioSource.timeSamples / Instance.audioSource.clip.frequency;
