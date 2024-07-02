@@ -4,104 +4,97 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lane : MonoBehaviour
-{
-    public Melanchall.DryWetMidi.MusicTheory.NoteName noteRestriction;
-    public KeyCode input;
-    public GameObject notePrefab;
-    public GameObject progressBar;
-    List<Note> notes = new List<Note>();
-    public List<double> timeStamps = new List<double>(); // список таймингов нот в миди файле
-    public List<double> notesLen = new List<double>(); // список длин нот из миди файла
-
-    int spawnIndex = 0;
-    int inputIndex = 0;
-
-    void Start()
+namespace RhythmGame {
+    public class Lane : MonoBehaviour, IGameUpdateListener
     {
+        public Melanchall.DryWetMidi.MusicTheory.NoteName noteRestriction;
+        public KeyCode input;
+        public GameObject notePrefab;
+        public GameObject progressBar;
 
-    }
-    public void SetTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
-    {
-        TempoMap tempoMap = SongManager.midiFile.GetTempoMap();
+        public GameObject scoreManager;
+        List<Note> notes = new List<Note>();
+        public List<double> timeStamps = new List<double>();
+        public List<double> notesLen = new List<double>();
 
-        foreach (var note in array)
+        int spawnIndex = 0;
+        int inputIndex = 0;
+
+        private void Start() => IGameListener.Register(this);
+        private void Hit() => scoreManager.GetComponent<ScoreManager>().Hit();
+        private void Miss() => scoreManager.GetComponent<ScoreManager>().Miss();
+
+        public void SetTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
         {
-            if (note.NoteName == noteRestriction)
-            {
-                var metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap);
-                timeStamps.Add((double)metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + (double)metricTimeSpan.Milliseconds / 1000f);
+            TempoMap tempoMap = SongManager.midiFile.GetTempoMap();
 
-                //временный хардкод для получения длины ноты в виде числа (1 - обычная нота, все, что больше - нота с удержанием, потом на это число умножаем скейл по Y)
-                var noteLength = note.LengthAs<MetricTimeSpan>(tempoMap).TotalMicroseconds / 1000 / 107;
-                notesLen.Add(noteLength);
-            }
-        }
-    }
-    void Update()
-    {
-        if (spawnIndex < timeStamps.Count)
-        {
-            if (SongManager.GetAudioSourceTime() >= timeStamps[spawnIndex] - SongManager.Instance.noteTime)
+            foreach (var note in array)
             {
-                //спавним очередную ноту и присваиваем ей значения параметров
-                var note = Instantiate(notePrefab, transform);
-                notes.Add(note.GetComponent<Note>());
-                note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];
-                note.GetComponent<Note>().assignedLength = (float)notesLen[spawnIndex];
-
-                if (progressBar)
+                if (note.NoteName == noteRestriction)
                 {
-                    progressBar.GetComponent<ProgressBar>().isActive = true;
-                    // задержка для режима активности (время от точки спавна до точки нажатия ноты)
-                    progressBar.GetComponent<ProgressBar>().isActiveAfterTime = SongManager.Instance.noteTime;
-                    // время активности переводим обратно в секунды
-                    progressBar.GetComponent<ProgressBar>().activeTime = note.GetComponent<Note>().assignedLength * 107 / 1000;
+                    var metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap);
+                    var noteLength = note.LengthAs<MetricTimeSpan>(tempoMap).TotalMicroseconds / 1000 / 107;
+
+                    timeStamps.Add((double)metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + (double)metricTimeSpan.Milliseconds / 1000f);
+                    notesLen.Add(noteLength);
                 }
-
-                spawnIndex++;
             }
         }
-
-        if (inputIndex < timeStamps.Count)
+        public void OnUpdate(float deltaTime)
         {
-            double timeStamp = timeStamps[inputIndex];
-            double marginOfError = SongManager.Instance.marginOfError;
-            double audioTime = SongManager.GetAudioSourceTime() - (SongManager.Instance.inputDelayInMilliseconds / 1000.0);
-
-            if (Input.GetKeyDown(input))
+            if (spawnIndex < timeStamps.Count)
             {
-                if (Math.Abs(audioTime - timeStamp) < marginOfError)
+                if (SongManager.GetAudioSourceTime() >= timeStamps[spawnIndex] - SongManager.Instance.noteTime)
                 {
-                    Hit();
-                    print($"Hit on {inputIndex} note");
+                    var note = Instantiate(notePrefab, transform);
+                    notes.Add(note.GetComponent<Note>());
+                    note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];
+                    note.GetComponent<Note>().assignedLength = (float)notesLen[spawnIndex];
 
-                    if (notes[inputIndex].GetComponent<Note>().assignedLength == 1)
+                    if (progressBar)
                     {
-                        Destroy(notes[inputIndex].gameObject);
+                        progressBar.GetComponent<ProgressBar>().isActive = true;
+                        progressBar.GetComponent<ProgressBar>().isActiveAfterTime = SongManager.Instance.noteTime;
+                        progressBar.GetComponent<ProgressBar>().activeTime = note.GetComponent<Note>().assignedLength * 107 / 1000;
                     }
-                    inputIndex++;
-                }
-                else
-                {
-                    print($"Hit inaccurate on {inputIndex} note with {Math.Abs(audioTime - timeStamp)} delay");
+
+                    spawnIndex++;
                 }
             }
 
-            if (timeStamp + marginOfError <= audioTime)
+            if (inputIndex < timeStamps.Count)
             {
-                Miss();
-                print($"Missed {inputIndex} note");
-                inputIndex++;
+                double timeStamp = timeStamps[inputIndex];
+                double marginOfError = SongManager.Instance.marginOfError;
+                double audioTime = SongManager.GetAudioSourceTime() - (SongManager.Instance.inputDelayInMilliseconds / 1000.0);
+
+                if (Input.GetKeyDown(input))
+                {
+                    if (Math.Abs(audioTime - timeStamp) < marginOfError)
+                    {
+                        Hit();
+                        print($"Hit on {inputIndex} note");
+
+                        if (notes[inputIndex].GetComponent<Note>().assignedLength == 1) Destroy(notes[inputIndex].gameObject);
+
+                        inputIndex++;
+                    }
+                    else
+                    {
+                        print($"Hit inaccurate on {inputIndex} note with {Math.Abs(audioTime - timeStamp)} delay");
+                    }
+                }
+
+                if (timeStamp + marginOfError <= audioTime)
+                {
+                    if (!progressBar)
+                    {
+                        Miss();
+                        print($"Missed {inputIndex} note");
+                        inputIndex++;
+                    }
+                }
             }
         }
-    }
-    private void Hit()
-    {
-        ScoreManager.Hit();
-    }
-    private void Miss()
-    {
-        ScoreManager.Miss();
     }
 }

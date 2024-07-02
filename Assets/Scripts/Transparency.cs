@@ -4,68 +4,72 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Transparency : MonoBehaviour
-{
-    public float changeSpeed;
-    public float defaultTransparency;
-    private float updatedTransparency;
-    private Transform[] allChildren;
-    void Start()
+namespace RhythmGame {
+    public class Transparency : MonoBehaviour, IGameUpdateListener
     {
-        allChildren = transform.GetComponentsInChildren<Transform>();
+        private float updatedTransparency;
+        private Transform[] allChildren;
+        public float changeSpeed;
+        public float defaultTransparency;
 
-        // Это нужно переделать
-        foreach (var item in allChildren)
-        {
-            if (item.GetComponent<TextMeshPro>() != null)
-            {
-                Color color =  item.GetComponent<TextMeshPro>().color;
-                color.a = defaultTransparency;
-                item.GetComponent<TextMeshPro>().color = color;
-            }
-            else if (item.GetComponent<SpriteRenderer>() != null)
-            {
-                Color color =  item.GetComponent<SpriteRenderer>().material.color;
-                color.a = defaultTransparency;
-                item.GetComponent<SpriteRenderer>().material.SetColor("_Color", color);
-            }
-            else if (item.GetComponent<Image>() != null)
-            {
-                Color color =  item.GetComponent<Image>().color;
-                color.a = defaultTransparency;
-                item.GetComponent<Image>().color = color;
-            }
-        }
-    }
+        private void Start() {
+            IGameListener.Register(this);
+            allChildren = transform.GetComponentsInChildren<Transform>();
 
-    void Update()
-    {
-        if (updatedTransparency >= 255) updatedTransparency = 255;
-
-        if (updatedTransparency <= 0) updatedTransparency = 0;
-
-        // Это нужно переделать
-        if (updatedTransparency >= 0 & updatedTransparency <= 255)
-        {
+            // Это нужно переделать
             foreach (var item in allChildren)
-            {   updatedTransparency += changeSpeed;
+            {
                 if (item.GetComponent<TextMeshPro>() != null)
                 {
                     Color color =  item.GetComponent<TextMeshPro>().color;
-                    color.a = updatedTransparency/255f;
+                    color.a = defaultTransparency;
                     item.GetComponent<TextMeshPro>().color = color;
                 }
                 else if (item.GetComponent<SpriteRenderer>() != null)
                 {
-                    Color color = item.GetComponent<SpriteRenderer>().material.color;
-                    color.a = updatedTransparency/255f;
+                    Color color =  item.GetComponent<SpriteRenderer>().material.color;
+                    color.a = defaultTransparency;
                     item.GetComponent<SpriteRenderer>().material.SetColor("_Color", color);
                 }
                 else if (item.GetComponent<Image>() != null)
                 {
-                    Color color = item.GetComponent<Image>().color;
-                    color.a = updatedTransparency/255f;
+                    Color color =  item.GetComponent<Image>().color;
+                    color.a = defaultTransparency;
                     item.GetComponent<Image>().color = color;
+                }
+            }
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            if (updatedTransparency >= 255) updatedTransparency = 255;
+
+            if (updatedTransparency <= 0) updatedTransparency = 0;
+
+            // Это нужно переделать
+            if (updatedTransparency >= 0 & updatedTransparency <= 255)
+            {
+                foreach (var item in allChildren)
+                {
+                    updatedTransparency += changeSpeed;
+                    if (item.GetComponent<TextMeshPro>() != null)
+                    {
+                        Color color =  item.GetComponent<TextMeshPro>().color;
+                        color.a = updatedTransparency/255f;
+                        item.GetComponent<TextMeshPro>().color = color;
+                    }
+                    else if (item.GetComponent<SpriteRenderer>() != null)
+                    {
+                        Color color = item.GetComponent<SpriteRenderer>().material.color;
+                        color.a = updatedTransparency/255f;
+                        item.GetComponent<SpriteRenderer>().material.SetColor("_Color", color);
+                    }
+                    else if (item.GetComponent<Image>() != null)
+                    {
+                        Color color = item.GetComponent<Image>().color;
+                        color.a = updatedTransparency/255f;
+                        item.GetComponent<Image>().color = color;
+                    }
                 }
             }
         }

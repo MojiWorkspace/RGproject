@@ -1,32 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class ScoreManager : MonoBehaviour
-{
-    public static ScoreManager Instance;
-    public AudioSource hitSFX;
-    public AudioSource missSFX;
-    public TMPro.TextMeshPro scoreText;
-    static int comboScore;
-    void Start()
+namespace RhythmGame {
+    public class ScoreManager : MonoBehaviour, IGameUpdateListener, IGameFinishListener
     {
-        Instance = this;
-        comboScore = 0;
-    }
-    public static void Hit()
-    {
-        comboScore += 1;
-        Instance.hitSFX.Play();
-    }
-    public static void Miss()
-    {
-        comboScore = 0;
-        Instance.missSFX.Play();
-    }
+        static int comboScore;
 
-    private void Update()
-    {
-        scoreText.text = "Combo: " + comboScore.ToString();
+        public static ScoreManager Instance;
+        public AudioSource missSFX;
+        public TMPro.TextMeshPro scoreText;
+        public GameObject healthBar;
+
+        private void Start() {
+            IGameListener.Register(this);
+            Instance = this;
+            comboScore = 0;
+        }
+        public void Hit() => comboScore += 1;
+        public void Miss()
+        {
+            comboScore = 0;
+            healthBar.GetComponent<HealthBar>().setHealthCount(-1);
+            Instance.missSFX.Play();
+        }
+        public void OnUpdate(float deltaTime)
+        {
+            if (comboScore > 3)
+            {
+                scoreText.text = "Combo: " + comboScore.ToString();
+            }
+            else
+            {
+                scoreText.text = "";
+            }
+        }
+        public void OnFinishGame() => scoreText.text = "";
     }
 }
