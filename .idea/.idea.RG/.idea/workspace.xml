@@ -7,6 +7,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Utils/Coroutines.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs" />
@@ -16,9 +19,16 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/Test.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/IGameListener.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/GameListeners.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Input/MoveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager/GameEntryPoint.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Utils/UIRootView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Utils/Coroutines.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Gameplay/Root/GameplayEntryPoint.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/UIRootView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/GameEntryPoint.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/Scenes.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="2iQ5XVhhf7MxB0utolAOFjxRmOv" />
@@ -44,6 +54,7 @@
       <workItem from="1719410015038" duration="1194000" />
       <workItem from="1719473541003" duration="4082000" />
       <workItem from="1719559216324" duration="7006000" />
+      <workItem from="1719992852647" duration="10597000" />
     </task>
     <servers />
   </component>

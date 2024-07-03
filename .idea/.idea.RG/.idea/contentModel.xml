@@ -37,16 +37,33 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="GameManager" t="Include">
-            <e p="GameListeners.cs" t="Include" />
-            <e p="GameManager.cs" t="Include" />
+          <e p="Game" t="Include">
+            <e p="GameManager" t="Include">
+              <e p="GameListeners.cs" t="Include" />
+              <e p="GameManager.cs" t="Include" />
+            </e>
+            <e p="Gameplay" t="Include">
+              <e p="Root" t="Include">
+                <e p="GameplayEntryPoint.cs" t="Include" />
+              </e>
+            </e>
+            <e p="GameRoot" t="Include">
+              <e p="GameEntryPoint.cs" t="Include" />
+              <e p="Scenes.cs" t="Include" />
+              <e p="UIRootView.cs" t="Include" />
+            </e>
+            <e p="Utils" t="Include">
+              <e p="Coroutines.cs" t="Include" />
+            </e>
           </e>
+          <e p="HealthBar.cs" t="Include" />
           <e p="Input" t="Include">
             <e p="InputManager.cs" t="Include" />
             <e p="MoveConfig.cs" t="Include" />
             <e p="MoveController.cs" t="Include" />
           </e>
           <e p="Lane.cs" t="Include" />
+          <e p="LaneBtn.cs" t="Include" />
           <e p="Note.cs" t="Include" />
           <e p="Objects" t="Include">
             <e p="Character.cs" t="Include" />
@@ -54,6 +71,7 @@
           <e p="ProgressBar.cs" t="Include" />
           <e p="ScoreManager.cs" t="Include" />
           <e p="SongManager.cs" t="Include" />
+          <e p="Transparency.cs" t="Include" />
         </e>
         <e p="SpriteOutline" t="Include">
           <e p="Shaders" t="Include">
