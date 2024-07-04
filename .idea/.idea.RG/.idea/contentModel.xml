@@ -45,12 +45,23 @@
             <e p="Gameplay" t="Include">
               <e p="Root" t="Include">
                 <e p="GameplayEntryPoint.cs" t="Include" />
+                <e p="View" t="Include">
+                  <e p="UIGameplayRootBinder.cs" t="Include" />
+                </e>
               </e>
             </e>
             <e p="GameRoot" t="Include">
               <e p="GameEntryPoint.cs" t="Include" />
               <e p="Scenes.cs" t="Include" />
               <e p="UIRootView.cs" t="Include" />
+            </e>
+            <e p="MainMenu" t="Include">
+              <e p="Root" t="Include">
+                <e p="MainMenuEntryPoint.cs" t="Include" />
+                <e p="View" t="Include">
+                  <e p="UIMainMenuRootBinder.cs" t="Include" />
+                </e>
+              </e>
             </e>
             <e p="Utils" t="Include">
               <e p="Coroutines.cs" t="Include" />

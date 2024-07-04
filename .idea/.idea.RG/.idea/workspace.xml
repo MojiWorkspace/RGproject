@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Utils/Coroutines.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Gameplay/Root/View/UIGameplayRootBinder.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -25,10 +26,14 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/Utils/UIRootView.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/Utils/Coroutines.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Gameplay/Root/GameplayEntryPoint.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/GameEntryPoint.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/Scenes.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/UIRootView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Gameplay/Root/View/UIGameplayRootBinder.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Gameplay/Root/GameplayEntryPoint.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/Scenes.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/MainMenu/Root/MainMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/MainMenu/Root/MainMenuEntryPoint.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/MainMenu/Root/View/UIMainMenuRootBinder.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameRoot/GameEntryPoint.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="2iQ5XVhhf7MxB0utolAOFjxRmOv" />
@@ -40,7 +45,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -55,6 +60,7 @@
       <workItem from="1719473541003" duration="4082000" />
       <workItem from="1719559216324" duration="7006000" />
       <workItem from="1719992852647" duration="12605000" />
+      <workItem from="1720076717091" duration="6963000" />
     </task>
     <servers />
   </component>

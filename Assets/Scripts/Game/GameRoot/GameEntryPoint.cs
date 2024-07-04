@@ -41,6 +41,12 @@ namespace RhythmGame
 #if UNITY_EDITOR
             var sceneName = SceneManager.GetActiveScene().name;
 
+            if (sceneName == Scenes.MAIN_MENU)
+            {
+                _coroutines.StartCoroutine(LoadAndStartMainMenu());
+                return;
+            }
+            
             if (sceneName == Scenes.GAMEPLAY)
             {
                 _coroutines.StartCoroutine(LoadAndStartGameplay());
@@ -55,6 +61,26 @@ namespace RhythmGame
 
             _coroutines.StartCoroutine(LoadAndStartGameplay());
         }
+        
+        private IEnumerator LoadAndStartMainMenu()
+        {
+            _uiRoot.ShowLoadingScreen();
+
+            yield return LoadScene(Scenes.BOOT);
+            yield return LoadScene(Scenes.MAIN_MENU);
+
+            yield return new WaitForSeconds(2);
+
+            var sceneEntryPoint = Object.FindObjectOfType<MainMenuEntryPoint>();
+            sceneEntryPoint.Run(_uiRoot);
+
+            sceneEntryPoint.GoToGameplaySceneRequested += () =>
+            {
+                _coroutines.StartCoroutine(LoadAndStartGameplay());
+            };
+            
+            _uiRoot.HideLoadingScreen();
+        }
 
         private IEnumerator LoadAndStartGameplay()
         {
@@ -66,7 +92,12 @@ namespace RhythmGame
             yield return new WaitForSeconds(2);
 
             var sceneEntryPoint = Object.FindObjectOfType<GameplayEntryPoint>();
-            sceneEntryPoint.Run();
+            sceneEntryPoint.Run(_uiRoot);
+            
+            sceneEntryPoint.GoToMainMenuSceneRequested += () =>
+            {
+                _coroutines.StartCoroutine(LoadAndStartMainMenu());
+            };
             
             _uiRoot.HideLoadingScreen();
         }
