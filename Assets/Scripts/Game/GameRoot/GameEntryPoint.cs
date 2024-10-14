@@ -38,6 +38,7 @@ namespace RhythmGame
 
         private void StartGame()
         {
+            /*
 #if UNITY_EDITOR
             var sceneName = SceneManager.GetActiveScene().name;
 
@@ -60,6 +61,7 @@ namespace RhythmGame
 #endif
 
             _coroutines.StartCoroutine(LoadAndStartGameplay());
+        */
         }
         
         private IEnumerator LoadAndStartMainMenu()

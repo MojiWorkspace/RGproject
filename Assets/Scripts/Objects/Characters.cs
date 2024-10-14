@@ -3,7 +3,7 @@ using System;
 
 namespace RhythmGame
 {
-    public sealed class Character : MonoBehaviour
+    public sealed class Characters : MonoBehaviour
     {
         [SerializeField]
         private float _speed = 2.5f;
